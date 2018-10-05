@@ -108,7 +108,10 @@ MOVE	'ReadingDBlog_log'	TO	'C:\SQL_Backup\ReadingDBLog.ldf'
 GO
 
 --Restore Log backup with STOPBEFOREMARK option to recover exact LSN.
-RESTORE	LOG	ReadingDBLog_COPY FROM DISK	= N'C:\SQL_Backup\ReadingDBLog.trn'
+RESTORE	LOG	ReadingDBLog_COPY FROM DISK	= N'C:\SQL_Backup\ReadingDBLog_1.trn'
+WITH NORECOVERY
+
+RESTORE	LOG	ReadingDBLog_COPY FROM DISK	= N'C:\SQL_Backup\ReadingDBLog_2.trn'
 WITH STOPBEFOREMARK	= 'lsn:34000000026300010', RECOVERY
 
 /*
