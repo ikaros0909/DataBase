@@ -30,7 +30,7 @@ CREATE	TABLE	[Location]	(
 [City]	CHAR (25) DEFAULT	'Seoul');
 ```
 
-### 생성된 테이블에 데이터를 입력 한다.  
+- 생성된 테이블에 데이터를 입력 한다.  
 ```sql
 USE	ReadingDBLog
 go
@@ -38,7 +38,7 @@ INSERT	INTO	Location	DEFAULT	VALUES	;
 GO 100
 ```
 
-### 일부 데이터를 삭제 한다. 10 이하의 행이 삭제 된 것을 확인 할 수 있다.  
+- 일부 데이터를 삭제 한다. 10 이하의 행이 삭제 된 것을 확인 할 수 있다.  
 ```sql
 USE	ReadingDBLog
 Go
