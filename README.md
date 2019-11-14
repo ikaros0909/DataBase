@@ -7,7 +7,7 @@ http://www.sqler.com/bColumn/873012
 테이블에서 데이터가 삭제된 것을 복원하는 방법에 대해서 알아 본다. 실습용 데이터베이스와 테이블을 생성한다.  
 전제조건 : Full Backup이 존재해야함. 복구모델이 전체 이어야 함.  
 
---Create DB.
+### Create DB.
 ```sql
 USE	[master];  
 GO
