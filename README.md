@@ -147,3 +147,17 @@ SELECT * from Location
 RESTORE DATABASE LAIGODB WITH RECOVERY
 ```
 
+
+### 트랜잭션 로그 축소
+```dbcc
+/*DB축소*/
+--ALTER DATABASE AILES2013 SET RECOVERY SIMPLE   
+--DBCC SHRINKdatabase (AILES2013,truncateonly)  
+--DBCC SHRINKFILE(AILES2013_log)  
+  
+/*DB정보*/  
+--EXEC sp_helpdb AILES2013  
+
+/*DB통계업데이트*/
+exec sp_updatestats
+```
