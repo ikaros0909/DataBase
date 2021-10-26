@@ -131,7 +131,8 @@ WITH STOPBEFOREMARK	= 'lsn:34000000026300010', RECOVERY
 ```
 
 ### 특정지점으로 복원하기  
-RESTORE	LOG	DSS2020_0926_09 FROM DISK	= N'D:\DBBackup\DSS2020_0928_19.trn'
+먼저 전체백업 데이터베이스를 Restore 한 다음 trn 파일을 이용해 특정 시점으로 복원한다.
+RESTORE	LOG	ReadingDBLog_COPY FROM DISK	= N'D:\DBBackup\DSS2020_0928_19.trn'
 WITH STOPAT = '2017-11-11 03:03:03', RECOVERY
 
 
