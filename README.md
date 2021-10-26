@@ -132,10 +132,10 @@ WITH STOPBEFOREMARK	= 'lsn:34000000026300010', RECOVERY
 
 ### 특정지점으로 복원하기  
 먼저 전체백업 데이터베이스를 Restore 한 다음 trn 파일을 이용해 특정 시점으로 복원한다.
-''' 특정시점 복원
+``` 특정시점 복원
 RESTORE	LOG	ReadingDBLog_COPY FROM DISK	= N'D:\DBBackup\DSS2020_0928_19.trn'
 WITH STOPAT = '2017-11-11 03:03:03', RECOVERY
-'''
+```
 
 복원이 완료되면 다음과 같이 데이터를 조회한다. 삭제된 데이터가 트랜잭션로그 백업에서 복구 된 것을 확인 할 수 있다.  
 
