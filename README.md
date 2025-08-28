@@ -181,3 +181,45 @@ GO
 RESTORE DATABASE DSS2022_20211026 WITH RECOVERY
 GO
 ```
+
+### 이기종 누적백업
+1) TRN이 “진짜 PAMS 체인”인지 확인
+-- TRN 파일의 메타정보 확인: DatabaseName, DatabaseGUID, BackupType, FirstLSN/LastLSN 등
+```
+RESTORE HEADERONLY
+FROM DISK = N'D:\DBRoot\pams\pams_20250828.trn';
+```
+여기서 확인할 포인트:
+BackupType = 2(Log) 이어야 함
+DatabaseName이 PAMS여도 DatabaseGUID가 다르면 같은 DB로 취급되지 않음
+
+FirstLSN/LastLSN이 직전에 복원한 FULL의 checkpoint_lsn 이후를 연속으로 덮어야 함
+(FULL의 기준값은 아래 2)에서 확인)
+
+2) 복원한 FULL의 기준 LSN/체인 확인
+-- FULL 백업 헤더 (체인 기준 LSN/DatabaseGUID 확인)
+```
+RESTORE HEADERONLY
+FROM DISK = N'D:\DBRoot\pams\PAMS_20230531.bak';
+```
+확인 포인트:
+DatabaseGUID: TRN과 일치해야 함
+BackupType = 1(Full)
+CheckpointLSN, DatabaseBackupLSN 값을 메모
+원리: DatabaseGUID가 다르면 그 TRN은 이 FULL 위에 절대 적용 불가.
+이름(PAMS)이 같아도 GUID가 다르면 다른 체인이야.
+
+3) TRN 파일에 백업 세트가 여러 개일 수 있음 → FILE=n 지정
+하나의 .trn 파일 안에 여러 번의 로그 백업이 들어 있을 수 있어. 이때는 **정확한 세트 번호(FILE=n)**를 골라야 한다.
+
+-- 파일 안의 모든 백업 세트 나열(간단 요약 보려면 msdb 쿼리도 가능)
+```
+RESTORE HEADERONLY
+FROM DISK = N'D:\DBRoot\pams\pams_20250828.trn';
+```
+-- 위 결과에서 원하는 세트의 Position 값을 FILE=n에 넣어 실행
+```
+RESTORE LOG [PAMS]
+  FROM DISK = N'D:\DBRoot\pams\pams_20250828.trn'
+  WITH FILE = <Position값>, NORECOVERY;
+```
